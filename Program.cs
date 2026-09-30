@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 ShoppingList list = new ShoppingList("items.txt");
 
 
@@ -25,9 +27,14 @@ while (true)
     }
     else if (choice == 2)
     {
-        Console.Write("Nummer: ");
+        Console.Write("Nummer:");
         int number = int.Parse(Console.ReadLine());
-        list.RemoveAt(number);
+        //list.RemoveAt(number);
+        {
+            if (number > 3) // was number not choice
+            System.Console.WriteLine("Du måste välja inom intervallet 1-3");
+            Console.ReadLine();
+        }
     }
     else if (choice == 3)
     {

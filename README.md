@@ -21,6 +21,9 @@ At line 2 the list goes away and we can run the code.
 
 ### 2 Skriv bokstäver där programmet vill ha ett tal.
 --------------------
+"What string is being passed into int.Parse() when it crashes?"
+Id say there is none as its a int again so that needs to be a string
+.Stopping here for now Its some Tryparse missing here i presume. 2026-09-30
 
 Unhandled exception. System.FormatException: The input string 'hej' was not in a correct format.
    at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
@@ -47,3 +50,7 @@ __3__ #### Ta bort en vara som inte finns
 ### at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 30
 
 The index is out of range. Cant be negative and less than the "amount"
+Belive that the list changed now tho as i only type "Mjölk" 20 no ? 17:33 09-30-26
+The Case didnt go as it got removed at. 
+"Yeah that worked but why did i have to comment out the removeat?"
+Chat- The number input got removed and gave the error. 
