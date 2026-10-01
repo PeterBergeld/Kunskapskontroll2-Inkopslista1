@@ -69,7 +69,7 @@ class ShoppingList
 
         try
         {
-            File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n");
+            File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n"); // Line "" SO IT CREATES A EMPTY ONE
         }
         catch
         {
@@ -86,8 +86,37 @@ class ShoppingList
 
         foreach (string line in lines)
         {
+            if (string.IsNullOrWhiteSpace(line)) // So we have to make an if statment to catch if its letters and not a number
+            {
+                 continue; 
+            }
+            
             string[] parts = line.Split(';');
-            items.Add(new Item(parts[0], int.Parse(parts[3]))); // Just to get me  started
+            items.Add(new Item(parts[1], int.Parse(parts[0]))); // Just to get me  started...Yeah there is an array created, so that means part 0 becomes price
+            // and 1 becomes item thus 15;mjölk
+            
         }
     }
 }
+//     foreach (string line in lines)
+// {
+//     string[] parts = line.Split(';');
+
+//     Console.WriteLine($"Line: '{line}'");
+//     Console.WriteLine($"Parts count: {parts.Length}");
+
+//     items.Add(new Item(parts[1], int.Parse(parts[0])));   // Error handling. CW writes it out in the console 
+
+//'ine: '15;Mjölk
+// Parts count: 2
+// 'ine: '32;Bröd
+// Parts count: 2
+// 'ine: '89;Ost
+// Parts count: 2
+// Line: ''  thats the one that makes the error
+// Parts count: 1
+// }
+// }
+// }
+
+// Line "" SO IT CREATES A EMPTY ONE

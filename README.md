@@ -1,4 +1,4 @@
-### Skriv bokstäver där programmet vill ha ett tal.
+### __Skriv bokstäver där programmet vill ha ett tal.__
 So every line in the program that wants a number?!!?
 mdContent.AppendLine("<font size=\"6\">1</font>");
 ### Ta bort en vara som inte finns.         //Made it awkward for me as that tells me to remove line of code from the prog. asap. 
@@ -13,6 +13,15 @@ __1__
 cs:line 90
 We change the 0 to 3 cus we have 3 parts (3 products).  items.Add(new Item(parts[1], int.Parse(parts[3 instead of 0])));
 
+Yeah really ddint do much, we quite needed the list. 
+But yeah the item.add had a whitespace space so we add the if statment to "catch" that one.
+
+if (string.IsNullOrWhiteSpace(line))  89;13
+
+{
+   continue;  
+}
+
 ### at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 2
 At line 2 the list goes away and we can run the code.
 
@@ -24,11 +33,13 @@ At line 2 the list goes away and we can run the code.
 "What string is being passed into int.Parse() when it crashes?"
 Id say there is none as its a int again so that needs to be a string
 .Stopping here for now Its some Tryparse missing here i presume. 2026-09-30
+There 
 
 Unhandled exception. System.FormatException: The input string 'hej' was not in a correct format.
    at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
    at System.Int32.Parse(String s)
    at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 29 (32)
+
 
    The try/catch get used to fix the error
 

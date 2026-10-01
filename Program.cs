@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 ShoppingList list = new ShoppingList("items.txt");
 
-//list.Load(); // so we can start the prog as is, lets see how it will react later.
+list.Load(); // so we can start the prog as is, lets see how it will react later.
 
 while (true)
 {
