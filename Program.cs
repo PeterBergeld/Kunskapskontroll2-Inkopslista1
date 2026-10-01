@@ -1,7 +1,9 @@
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 ShoppingList list = new ShoppingList("items.txt");
 
+//list.Load(); // so we can start the prog as is, lets see how it will react later.
 
 while (true)
 {
@@ -26,16 +28,27 @@ while (true)
         list.Add(new Item(name, price));
     }
     else if (choice == 2)
+{
+    Console.Write("Nummer: ");
+
+    try
     {
-        Console.Write("Nummer:");
-        int number = int.Parse(Console.ReadLine());
-        //list.RemoveAt(number);
+        int number = int.Parse(Console.ReadLine()); // has to be in the try. 
+
+        if (number > 3)
         {
-            if (number > 3) // was number not choice
-            System.Console.WriteLine("Du måste välja inom intervallet 1-3");
+            Console.WriteLine("Du måste välja inom intervallet 1-3");
             Console.ReadLine();
         }
+
+        // list.RemoveAt(number); //U cant have it removed before u get into the case
     }
+    catch (FormatException)
+    {
+        Console.WriteLine("Du måste skriva ett nummer."); // first try/catch of the session
+        Console.ReadLine();
+    }
+}
     else if (choice == 3)
     {
         list.Save();

@@ -87,7 +87,7 @@ class ShoppingList
         foreach (string line in lines)
         {
             string[] parts = line.Split(';');
-            items.Add(new Item(parts[0], int.Parse(parts[3])));
+            items.Add(new Item(parts[0], int.Parse(parts[3]))); // Just to get me  started
         }
     }
 }

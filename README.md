@@ -28,7 +28,14 @@ Id say there is none as its a int again so that needs to be a string
 Unhandled exception. System.FormatException: The input string 'hej' was not in a correct format.
    at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
    at System.Int32.Parse(String s)
-   at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 29
+   at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 29 (32)
+
+   The try/catch get used to fix the error
+
+
+__4__
+-----------
+   Lägg till en vara, spara, avsluta och starta om. Ser listan likadan ut?
 
 
 
@@ -36,6 +43,19 @@ Unhandled exception. System.FormatException: The input string 'hej' was not in a
 
 
 
+
+
+
+
+#### 2 side (2 chapter )
+
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,5): error CS1022: Type or namespace definition, or end-of-file expected
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS8641: 'else' cannot start a statement.
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1003: Syntax error, '(' expected
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1525: Invalid expression term 'else'
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1026: ) expected
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1002: ; expected
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(85,1): error CS1022: Type or namespace definition, or end-of-file expected
 
 
 
