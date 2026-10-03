@@ -4,6 +4,9 @@ class ShoppingList
     private List<Item> items = new List<Item>();
     private string path;
 
+    public int Count => items.Count; // Property that returns the number of items in the list. Didnt have the count properyt added yet
+
+
     public ShoppingList(string path)
     {
         this.path = path;
@@ -17,6 +20,10 @@ class ShoppingList
     // Removes the item the user sees as number 1, 2, 3 ...
     public void RemoveAt(int number)
     {
+        if (number < 1 || number > items.Count) // Check if the number is out of range from the amount of products in the list. If it is, throw an exception.
+        {
+            throw new ArgumentOutOfRangeException(nameof(number), "Number is out of range.");
+        }
         items.RemoveAt(number - 1);
     }
 
@@ -25,7 +32,7 @@ class ShoppingList
     {
         int sum = 0;
 
-        for (int i = 1; i < items.Count; i++)
+        for (int i = 0; i < items.Count; i++)
         {
             sum += items[i].Price;
         }
@@ -51,7 +58,7 @@ class ShoppingList
     {
         for (int i = 0; i < items.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. {items[i]}");
+            Console.WriteLine($"{i + 1}. {items[i].Name} - {items[i].Price} kr"); // Needed both.
         }
 
         Console.WriteLine($"Totalt: {Total()} kr");
@@ -60,20 +67,33 @@ class ShoppingList
     // Writes one item per line, as "price;name".
     public void Save()
     {
+        Console.WriteLine(Path.GetFullPath(path));
+        //Console.WriteLine("Save() was called!");  // to actyally see if the method is called. It is, so the problem is not here.
+        //Console.WriteLine(Path.GetFullPath(path));
         List<string> lines = new List<string>();
+        Console.WriteLine($"Antal varor att spara: {items.Count}");
 
         foreach (Item item in items)
         {
             lines.Add($"{item.Price};{item.Name}");
+            
         }
 
         try
         {
-            File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n"); // Line "" SO IT CREATES A EMPTY ONE
+            File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n"); 
         }
         catch
         {
-        }
+            Console.WriteLine("Kunde inte spara listan.");
+        }    // so what happens when we just comment it out? It will just not save the list. yeah thats a crash XDXD
+        // try
+        // {
+        //     File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n"); // Line "" SO IT CREATES A EMPTY ONE
+        // }
+        // catch
+        // {
+        // }    // so what happens when we just comment it out? It will just not save the list. yeah thats a crash XDXD
 
         Console.WriteLine("Listan är sparad.");
     }
@@ -86,12 +106,12 @@ class ShoppingList
 
         foreach (string line in lines)
         {
-            if (string.IsNullOrWhiteSpace(line)) // So we have to make an if statment to catch if its letters and not a number
+            if (string.IsNullOrWhiteSpace(line)) //if the input it null or empty or whitespace then we just continue to the next line.
             {
                  continue; 
             }
             
-            string[] parts = line.Split(';');
+            string[] parts = line.Trim().Split(';');
             items.Add(new Item(parts[1], int.Parse(parts[0]))); // Just to get me  started...Yeah there is an array created, so that means part 0 becomes price
             // and 1 becomes item thus 15;mjölk
             

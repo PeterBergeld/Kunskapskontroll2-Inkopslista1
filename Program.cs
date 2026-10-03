@@ -1,13 +1,8 @@
-using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
-
 ShoppingList list = new ShoppingList("items.txt");
-
-list.Load(); // so we can start the prog as is, lets see how it will react later.
+list.Load();
 
 while (true)
 {
-    Console.WriteLine();
     list.Print();
     Console.WriteLine();
     Console.WriteLine("1. Lägg till vara");
@@ -15,56 +10,51 @@ while (true)
     Console.WriteLine("3. Spara");
     Console.WriteLine("4. Sök vara");
     Console.WriteLine("5. Avsluta");
-
     Console.Write("Välj: ");
 
-    int choice = int.Parse(Console.ReadLine());
+    if (!int.TryParse(Console.ReadLine(), out int choice))
+    {
+        Console.WriteLine("Du måste skriva ett nummer.");
+        continue;
+    }
 
     if (choice == 1)
     {
         Console.Write("Namn: ");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine() ?? "";
         Console.Write("Pris: ");
+        if (!int.TryParse(Console.ReadLine(), out int price))
+        {
+            Console.WriteLine("Du måste skriva ett nummer.");
+            continue;
+        }
 
-try
-{
-    int price = int.Parse(Console.ReadLine()); // has to be in the try. But why do we try and convert it and then add it to the list?, wouldnt it make more sense to not add it to the list if the conversion fails?
-    //list.Add(new Item(name, price)); 
-    // im guessing that this line dont really have to be here no?
-}
-catch (FormatException)
-{
-    Console.WriteLine("Du måste skriva ett nummer.");
-    continue; // This will skip the rest of the loop and go back to the beginning, allowing the user to try again. Which is what i want to see from a user perspective.
-}
-    
-        // int price = int.Parse(Console.ReadLine()); //encountered a problem with this lines, so I moved it into the try/catch block above. Was out of the scope.
-        // list.Add(new Item(name, price));
-
-
+        list.Add(new Item(name, price));
+        Console.WriteLine("Vara tillagd!");
     }
     else if (choice == 2)
     {
-        Console.Write("Nummer: ");
-
-        try
+        if (list.Count == 0)  // if the list == 0 then we have to make a if statement to catch that and say the list is empty
         {
-            int number = int.Parse(Console.ReadLine()); // has to be in the try. 
-
-            if (number > 3)
-            {
-                Console.WriteLine("Du måste välja inom intervallet 1-3");
-                Console.ReadLine();
-            }
-
-            // list.RemoveAt(number); //U cant have it removed before u get into the case
+            Console.WriteLine("Listan är tom.");
+            continue;
         }
-        catch (FormatException)
+
+        Console.Write("Ange numret på varan som ska tas bort: ");
+        if (!int.TryParse(Console.ReadLine(), out int number))  // a ! false sign to catch if the user writes letters instead of numbers
         {
-            Console.WriteLine("Du måste skriva ett nummer."); // first try/catch of the session
-            Console.ReadLine();
+            Console.WriteLine("Du måste skriva ett nummer.");
+            continue;
         }
-        
+
+        if (number < 1 || number > list.Count) // Yeah we had this one here too before. but then we didnt have the count public int Count => items.Count;
+        {
+            Console.WriteLine("Varan finns inte i listan.");
+            continue;
+        }
+
+        list.RemoveAt(number);
+        Console.WriteLine("Varan togs bort.");
     }
     else if (choice == 3)
     {
@@ -73,20 +63,20 @@ catch (FormatException)
     else if (choice == 4)
     {
         Console.Write("Namn att söka efter: ");
-        string wanted = Console.ReadLine();
+        string wanted = Console.ReadLine() ?? "";
         Item found = list.Find(wanted);
 
         if (found == null)
-        {
             Console.WriteLine("Varan finns inte i listan.");
-        }
         else
-        {
             Console.WriteLine($"Hittade: {found}");
-        }
     }
     else if (choice == 5)
     {
         break;
+    }
+    else
+    {
+        Console.WriteLine("Välj ett nummer mellan 1 och 5.");
     }
 }
