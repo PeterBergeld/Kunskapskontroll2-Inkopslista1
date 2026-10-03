@@ -15,6 +15,7 @@ while (true)
     Console.WriteLine("3. Spara");
     Console.WriteLine("4. Sök vara");
     Console.WriteLine("5. Avsluta");
+
     Console.Write("Välj: ");
 
     int choice = int.Parse(Console.ReadLine());
@@ -24,31 +25,47 @@ while (true)
         Console.Write("Namn: ");
         string name = Console.ReadLine();
         Console.Write("Pris: ");
-        int price = int.Parse(Console.ReadLine());
-        list.Add(new Item(name, price));
+
+try
+{
+    int price = int.Parse(Console.ReadLine()); // has to be in the try. But why do we try and convert it and then add it to the list?, wouldnt it make more sense to not add it to the list if the conversion fails?
+    //list.Add(new Item(name, price)); 
+    // im guessing that this line dont really have to be here no?
+}
+catch (FormatException)
+{
+    Console.WriteLine("Du måste skriva ett nummer.");
+    continue; // This will skip the rest of the loop and go back to the beginning, allowing the user to try again. Which is what i want to see from a user perspective.
+}
+    
+        // int price = int.Parse(Console.ReadLine()); //encountered a problem with this lines, so I moved it into the try/catch block above. Was out of the scope.
+        // list.Add(new Item(name, price));
+
+
     }
     else if (choice == 2)
-{
-    Console.Write("Nummer: ");
-
-    try
     {
-        int number = int.Parse(Console.ReadLine()); // has to be in the try. 
+        Console.Write("Nummer: ");
 
-        if (number > 3)
+        try
         {
-            Console.WriteLine("Du måste välja inom intervallet 1-3");
+            int number = int.Parse(Console.ReadLine()); // has to be in the try. 
+
+            if (number > 3)
+            {
+                Console.WriteLine("Du måste välja inom intervallet 1-3");
+                Console.ReadLine();
+            }
+
+            // list.RemoveAt(number); //U cant have it removed before u get into the case
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Du måste skriva ett nummer."); // first try/catch of the session
             Console.ReadLine();
         }
-
-        // list.RemoveAt(number); //U cant have it removed before u get into the case
+        
     }
-    catch (FormatException)
-    {
-        Console.WriteLine("Du måste skriva ett nummer."); // first try/catch of the session
-        Console.ReadLine();
-    }
-}
     else if (choice == 3)
     {
         list.Save();

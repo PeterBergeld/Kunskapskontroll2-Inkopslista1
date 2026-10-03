@@ -1,53 +1,113 @@
-### __Skriv bokstäver där programmet vill ha ett tal.__
-So every line in the program that wants a number?!!?
-mdContent.AppendLine("<font size=\"6\">1</font>");
-### Ta bort en vara som inte finns.         //Made it awkward for me as that tells me to remove line of code from the prog. asap. 
-### Where IS THE PRODUCT!!
-### but I need to cleary slow it down
----------
 
-#### __Starting the prog__
+# Kunskapskontroll 2 – Inköpslista
 
-__1__
-### Unhandled exception. System.IndexOutOfRangeException: Index was outside the bounds of the array. = Points to a list thats outside of an valid range of an array
-cs:line 90
-We change the 0 to 3 cus we have 3 parts (3 products).  items.Add(new Item(parts[1], int.Parse(parts[3 instead of 0])));
+## Debugging Notes and Observations
 
-Yeah really ddint do much, we quite needed the list. 
-But yeah the item.add had a whitespace space so we add the if statment to "catch" that one.
+### 1. Testing Invalid Input
 
-if (string.IsNullOrWhiteSpace(line))  89;13
+**Instruction:** Skriv bokstäver där programmet vill ha ett tal.
 
+**My interpretation:** Does this mean every line in the program that expects a number?
+
+For example:
+- Menu choice
+- Product price
+- Product number when removing an item
+
+The goal is to test what happens when the user enters something unexpected, such as `hej` instead of a number.
+
+### 2. Removing a Product That Doesn't Exist
+
+**Instruction:** Ta bort en vara som inte finns.
+
+**My comment:** I found this instruction confusing because I interpreted it as removing a line of code from the program.
+
+What I need to test is what happens when the user tries to remove a product that isn't in the list.
+
+### 3. Where IS THE PRODUCT?!
+
+I need to understand where the product goes after I add it, and how the program stores and displays it.
+
+I also need to slow down and follow the code step by step instead of changing several things at once.
+
+---
+
+## Starting the Program
+
+### Issue 1: `IndexOutOfRangeException`
+
+**Error message:**
+
+`System.IndexOutOfRangeException: Index was outside the bounds of the array.`
+
+**Location:** `ShoppingList.cs`, line 90.
+
+**What it means:** The program tried to access an array position that doesn't exist.
+
+**Code:**
+
+```csharp
+items.Add(new Item(parts[1], int.Parse(parts[3])));
+```
+
+**My initial thought:** We changed the index from `0` to `3` because we thought we had three parts (three products).
+
+**What I need to understand:** An index is a position, not the number of products. Index `0` is the first element, `1` is the second, `2` is the third, and `3` is the fourth.
+
+Changing the index to `3` only works if the array actually contains at least four elements.
+
+### Issue 2: Empty Lines in the Saved File
+
+I noticed that the saved file could contain an empty line or whitespace.
+
+We added this check:
+
+```csharp
+if (string.IsNullOrWhiteSpace(line))
 {
-   continue;  
+    continue;
 }
+```
 
-### at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 2
-At line 2 the list goes away and we can run the code.
+**What it does:** It skips empty lines and lines containing only whitespace, so the program doesn't try to process them as products.
 
+### Issue 3: Error Pointing to `Program.cs`, Line 2
 
+**Error location:**
 
+`Program.<Main>$(String[] args) in Program.cs:line 2`
 
-### 2 Skriv bokstäver där programmet vill ha ett tal.
---------------------
-"What string is being passed into int.Parse() when it crashes?"
-Id say there is none as its a int again so that needs to be a string
-.Stopping here for now Its some Tryparse missing here i presume. 2026-09-30
-There 
+After making the changes, the program could start running again.
 
-Unhandled exception. System.FormatException: The input string 'hej' was not in a correct format.
-   at System.Number.ThrowFormatException[TChar](ReadOnlySpan`1 value)
-   at System.Int32.Parse(String s)
-   at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 29 (32)
+**My observation:** The list seemed to disappear, and I could run the code.
 
+**What I need to investigate:** Was the list actually empty, or was it simply not being loaded or displayed correctly?
 
-   The try/catch get used to fix the error
+---
 
+## Lessons Learned So Far
 
-__4__
------------
-   Lägg till en vara, spara, avsluta och starta om. Ser listan likadan ut?
+### 1. Understanding Error Messages
 
+- Read the entire error message and identify the file and line number.
+- Identify the exception type and what it means.
+
+### 2. Understanding Arrays
+
+- An array index represents a position, not a number of products.
+- Check the number of elements before accessing an array index.
+
+### 3. Handling Saved Data
+
+- Skip empty lines when reading saved data.
+- Verify whether products are loaded and displayed correctly.
+
+### 4. Debugging Approach
+
+- Test one change at a time.
+- Distinguish between fixing a crash and fixing the underlying problem.
+- Verify whether a product is added, saved, loaded, and displayed correctly.
+- Slow down and understand why a change works instead of just making the error disappear.
 
 
 
