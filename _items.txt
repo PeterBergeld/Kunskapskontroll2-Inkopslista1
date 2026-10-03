@@ -1,1 +1,6 @@
-20;Mjölk
+50;mjölk
+20;Bröd
+10;Vatten
+15;Loka
+10;Kola
+89;Kola

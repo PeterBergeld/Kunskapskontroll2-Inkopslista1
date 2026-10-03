@@ -114,6 +114,8 @@ After making the changes, the program could start running again.
 
 ![alt text](image.png)
 
+Key lesson: If you see MSB3027 or MSB3021 and a message about a file being used by another process, check whether your previous application instance is still running.
+
 "Shopping (11948)" "The file is locked by.
 
 # Testing Invalid Input – Letter Instead of int
@@ -222,14 +224,19 @@ Metoden `Load()` läser in den sparade informationen från filen.
 ```csharp
 string text = File.ReadAllText(path);
 string[] lines = text.Split('\n');
+
+```
+Once we delete the items.txt we gotta make sure  the condition is true when the file is missing and `Load` starts, read only starts at F.ReadAllText(path); Othwie the file gives the FileMissingError
+```
+           if (!File.Exists(path))
+        {
+                return;
+        }
 ```
 
 - `File.ReadAllText(path)` läser hela filens innehåll som en sträng.
 - `Split('\n')` delar upp texten i separata rader.
 - `foreach` går igenom varje rad i arrayen.
-
-
-
 - `string.IsNullOrWhiteSpace(line)` kontrollerar om raden är tom eller bara innehåller blanksteg.
 - `continue` hoppar över den aktuella iterationen och går vidare till nästa rad.
 

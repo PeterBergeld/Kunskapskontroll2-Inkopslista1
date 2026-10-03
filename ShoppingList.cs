@@ -1,12 +1,14 @@
 // Holds the items and takes care of loading and saving them.
+using System.Data;
+
 class ShoppingList
 {
     private List<Item> items = new List<Item>();
     private string path;
 
-    public int Count => items.Count; // Property that returns the number of items in the list. Didnt have the count properyt added yet
+    public int Count => items.Count; // Property that returns the number of items in the list. Didnt have the count property added yet
 
-
+    
     public ShoppingList(string path)
     {
         this.path = path;
@@ -101,8 +103,15 @@ class ShoppingList
     // Reads the file back into the list.
     public void Load()
     {
+
+           if (!File.Exists(path))
+        {
+                return;
+        }
         string text = File.ReadAllText(path);
         string[] lines = text.Split('\n');
+
+       
 
         foreach (string line in lines)
         {
@@ -116,6 +125,7 @@ class ShoppingList
             // and 1 becomes item thus 15;mjölk
             
         }
+     
     }
 }
 //     foreach (string line in lines)

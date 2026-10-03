@@ -12,6 +12,8 @@ while (true)
     Console.WriteLine("5. Avsluta");
     Console.Write("Välj: ");
 
+    
+
     if (!int.TryParse(Console.ReadLine(), out int choice))
     {
         Console.WriteLine("Du måste skriva ett nummer.");
