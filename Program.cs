@@ -1,4 +1,5 @@
-ShoppingList list = new ShoppingList("items.txt");
+ShoppingList list = new ShoppingList("items.txt", 500);
+
 list.Load();
 
 while (true)
@@ -27,12 +28,29 @@ while (true)
         Console.Write("Pris: ");
         if (!int.TryParse(Console.ReadLine(), out int price))
         {
+            if ( string.IsNullOrWhiteSpace(name)) 
+            throw new ArgumentException();
+            System.Console.WriteLine("Du får inte skriva en tom rad");
+
             Console.WriteLine("Du måste skriva ett nummer.");
             continue;
         }
 
-        list.Add(new Item(name, price));
-        Console.WriteLine("Vara tillagd!");
+        bool added = list.Add(new Item(name, price));
+        if (added)
+        {
+            System.Console.WriteLine("Varan blev tillagd");
+        }
+        if (price < 0) 
+        {
+            throw new ArgumentOutOfRangeException();
+            
+        }
+        else
+        {
+            System.Console.WriteLine("Varan blev inte tillagd , du är över budget");
+        }
+       
     }
     else if (choice == 2)
     {
@@ -79,3 +97,14 @@ while (true)
     }
    
 }
+
+
+
+        // if ( string.IsNullOrWhiteSpace(name)) 
+        // throw new ArgumentException();
+        // System.Console.WriteLine("Du får inte skriva en tom rad");
+        
+
+        // if (price < 0)
+        // throw new ArgumentOutOfRangeException();
+        // System.Console.WriteLine("Du får inte skriva ett negativt tal");

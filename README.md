@@ -346,7 +346,53 @@ Goes in the contructor and as a validation it goes in at the beginning to preven
     if (price < 0)
         throw new ArgumentOutOfRangeException();
 ```
-Here the validation becomes abit different as we have 2 datatypes but
-the validation on the datatypes differ.
+Here the validation becomes abit different,
+the validation on the datatypes differ from string and int.
+The input price cant be lower than 0 aka negative.
+
+```
+Unhandled exception. System.ArgumentException: Value does not fall within the expected range.
+   at Item..ctor(String name, Int32 price) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Item.cs:line 10
+   at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 34
+```
+   Mental note: why do i get this error? "You cant write an empty row" but I cleary aint
+   ```
+   Välj: 1
+Namn: lok
+Pris: -15
+Du får inte skriva en tom rad
+```
+
+
+
+### Budget cap
+---
+```
+  items.Add(item);
+        if (Total() + item.Price > budget) 
+        {
+           
+        };
+```
+If total + pris of item is higher than the buget, give us an CW "You dont have enough money and the item wasnt added"
+The method Add() is a voiid and cant return a value. so wee need to adress that by chaning the reurntype into an bool. false/true
+
+```if (Total() + item.Price > budget)
+{
+    return false;
+}
+
+items.Add(item);
+return true;
+```
+```
+C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(1,25): error CS7036: There is no argument given that corresponds to the required parameter 'budget' of 'ShoppingList.ShoppingList(string, int)'
+````
+
+The shoppinglist needs an int , thus giving the parameter "500" as an int. 
+
+**Kasta ett undantag, eller returnera false — välj själv, och motivera valet i din README. Det finns
+inget facit, men det finns en följdfråga: vad behöver Program.cs göra med svaret?** :
+Made a bool as we have either "you are over/"under" budget". Try/Catch seems unnecessary and uneffective. We have an expected outcome
 
 

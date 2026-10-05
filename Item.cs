@@ -8,12 +8,17 @@ class Item
     {
         if ( string.IsNullOrWhiteSpace(name)) 
         throw new ArgumentException();
+        System.Console.WriteLine("Du får inte skriva en tom rad");
+        
 
         if (price < 0)
         throw new ArgumentOutOfRangeException();
+        System.Console.WriteLine("Du får inte skriva ett negativt tal");
 //         }
+{
         Name = name;
         Price = price;
+}
 
 // if ( string.IsNullOrWhiteSpace(name)) //Should be before the Item is "created"
 //         {

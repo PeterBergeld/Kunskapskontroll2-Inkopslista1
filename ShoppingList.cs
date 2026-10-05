@@ -8,15 +8,24 @@ class ShoppingList
 
     public int Count => items.Count; // Property that returns the number of items in the list. Didnt have the count property added yet
 
-    
-    public ShoppingList(string path)
+    public int budget;
+    public ShoppingList(string path, int budget)
     {
         this.path = path;
+        this.budget = budget;
     }
 
-    public void Add(Item item)
+    public bool Add(Item item) // handled by returning false or by throwing an exception. but need to change so it returns something, thus using the bool return datatype
     {
+        if (Total() + item.Price > budget) 
+        {
+            System.Console.WriteLine("Du har inte tillräckligt med pengar och varan adderades inte");
+            return false;
+        }
         items.Add(item);
+           // System.Console.WriteLine//("Varan lade`s till i korgen");
+        return true;
+
     }
 
     // Removes the item the user sees as number 1, 2, 3 ...
@@ -111,7 +120,7 @@ class ShoppingList
         string text = File.ReadAllText(path);
         string[] lines = text.Split('\n');
 
-       
+                                                //try.parse
 
         foreach (string line in lines)
         {
