@@ -77,8 +77,5 @@ while (true)
     {
         break;
     }
-    else
-    {
-        Console.WriteLine("Välj ett nummer mellan 1 och 5.");
-    }
+   
 }

@@ -13,6 +13,7 @@ For example:
 - Menu choice
 - Product price
 - Product number when removing an item
+- asdkadknadk
 
 The goal is to test what happens when the user enters something unexpected, such as `hej` instead of a number.
 
@@ -306,7 +307,7 @@ C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(85,1): error CS1
 
 
 
-__3__ #### Ta bort en vara som inte finns
+__3__  Ta bort en vara som inte finns
 --------------------------------------------------
 
 ### Unhandled exception. System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
@@ -319,3 +320,33 @@ Belive that the list changed now tho as i only type "Mjölk" 20 no ? 17:33 09-30
 The Case didnt go as it got removed at. 
 "Yeah that worked but why did i have to comment out the removeat?"
 Chat- The number input got removed and gave the error. 
+
+
+
+
+
+
+
+### Second part of the assigment
+---
+
+Item ska skydda sig själv
+Konstruktorn ska vägra ta emot ogiltiga värden i stället för att tyst skapa ett trasigt objekt:
+2/4
+- Tomt namn — kasta ArgumentException.
+```
+    if ( string.IsNullOrWhiteSpace(name)) 
+        throw new ArgumentException();
+```
+Goes in the contructor and as a validation it goes in at the beginning to prevent an invalid `Item` to be created 
+
+- Negativt pris — kasta ArgumentOutOfRangeException.
+
+```
+    if (price < 0)
+        throw new ArgumentOutOfRangeException();
+```
+Here the validation becomes abit different as we have 2 datatypes but
+the validation on the datatypes differ.
+
+
