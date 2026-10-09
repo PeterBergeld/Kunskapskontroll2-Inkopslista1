@@ -18,40 +18,55 @@ while (true)
     if (!int.TryParse(Console.ReadLine(), out int choice))
     {
         Console.WriteLine("Du måste skriva ett nummer.");
-        continue;
+        
     }
 
     if (choice == 1)
     {
         Console.Write("Namn: ");
         string name = Console.ReadLine() ?? "";
+
+    
+
         Console.Write("Pris: ");
-        if (!int.TryParse(Console.ReadLine(), out int price))
-        {
-            if ( string.IsNullOrWhiteSpace(name)) 
-            throw new ArgumentException();
-            System.Console.WriteLine("Du får inte skriva en tom rad");
+       
+       
+          if (!int.TryParse(Console.ReadLine(), out int price))
+    {
+        Console.WriteLine("Du måste skriva ett nummer.");
+        continue;
+    }
 
-            Console.WriteLine("Du måste skriva ett nummer.");
-            continue;
-        }
 
-        bool added = list.Add(new Item(name, price));
+
+    try
+    {
+        Item item = new Item(name, price);
+
+        bool added = list.Add(item);
+
         if (added)
         {
-            System.Console.WriteLine("Varan blev tillagd");
-        }
-        if (price < 0) 
-        {
-            throw new ArgumentOutOfRangeException();
-            
+            Console.WriteLine("Varan blev tillagd.");
         }
         else
         {
-            System.Console.WriteLine("Varan blev inte tillagd , du är över budget");
+            Console.WriteLine("Varan blev inte tillagd, du är över budget.");
         }
-       
     }
+    
+    catch (ArgumentOutOfRangeException)
+    {
+        Console.WriteLine("Du får inte skriva ett negativt tal.");
+    }
+    catch (ArgumentException ex)
+{
+    Console.WriteLine(ex.Message);
+    return;
+}
+}
+       
+    
     else if (choice == 2)
     {
         if (list.Count == 0)  // if the list == 0 then we have to make a if statement to catch that and say the list is empty
@@ -59,6 +74,7 @@ while (true)
             Console.WriteLine("Listan är tom.");
             continue;
         }
+        if (!int.TryParse(Console.ReadLine(), out int price))
 
         Console.Write("Ange numret på varan som ska tas bort: ");
         if (!int.TryParse(Console.ReadLine(), out int number))  // a ! false sign to catch if the user writes letters instead of numbers
@@ -100,11 +116,4 @@ while (true)
 
 
 
-        // if ( string.IsNullOrWhiteSpace(name)) 
-        // throw new ArgumentException();
-        // System.Console.WriteLine("Du får inte skriva en tom rad");
         
-
-        // if (price < 0)
-        // throw new ArgumentOutOfRangeException();
-        // System.Console.WriteLine("Du får inte skriva ett negativt tal");

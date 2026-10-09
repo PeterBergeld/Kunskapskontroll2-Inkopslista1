@@ -1,39 +1,24 @@
 
-# Kunskapskontroll 2 – Inköpslista
+
+# __Kunskapskontroll 2 – Inköpslista__
 
 ## Debugging Notes and Observations
 
-### 1. Testing Invalid Input
+### __1. Testing Invalid Input__
 
-**Instruction:** Skriv bokstäver där programmet vill ha ett tal.
-
-**My interpretation:** Does this mean every line in the program that expects a number?
 
 For example:
 - Menu choice
 - Product price
 - Product number when removing an item
-- asdkadknadk
+
 
 The goal is to test what happens when the user enters something unexpected, such as `hej` instead of a number.
 
-### 2. Removing a Product That Doesn't Exist
-
-**Instruction:** Ta bort en vara som inte finns.
-
-**My comment:** I found this instruction confusing because I interpreted it as removing a line of code from the program.
-
-What I need to test is what happens when the user tries to remove a product that isn't in the list.
-
-### 3. Where IS THE PRODUCT?!
-
-I need to understand where the product goes after I add it, and how the program stores and displays it.
-
-I also need to slow down and follow the code step by step instead of changing several things at once.
 
 ---
 
-## __1__ Starting the Program
+## __1 Starting the Program__
 
 ###  Issue 1: `IndexOutOfRangeException`
 
@@ -45,17 +30,11 @@ I also need to slow down and follow the code step by step instead of changing se
  
 **What it means:** The program tried to access an array position that doesn't exist.
 
-**Code:**
 
 ```csharp
 items.Add(new Item(parts[1], int.Parse(parts[3])));
 ```
 
-**My initial thought:** We changed the index from `0` to `3` because we thought we had three parts (three products).
-
-**What I need to understand:** An index is a position, not the number of products. Index `0` is the first element, `1` is the second, `2` is the third, and `3` is the fourth.
-
-Changing the index to `3` only works if the array actually contains at least four elements.
 
 ### Issue 2: Empty Lines in the Saved File
 
@@ -69,60 +48,16 @@ if (string.IsNullOrWhiteSpace(line))
     continue;
 }     
 ```
-ref: 87,10 in shoppinglist
+ref: 87,10 in shoppinglist.
+The line thats being typed cant be null or whitespace in datatype string
 
 **What it does:** It skips empty lines and lines containing only whitespace, so the program doesn't try to process them as products.
 
-### Issue 3: Error Pointing to `Program.cs`, Line 2
 
-**Error location:**
+# __Testing Invalid Input – Letter Instead of int__
 
-`Program.<Main>$(String[] args) in Program.cs:line 2`
-
-After making the changes, the program could start running again.
-
-**My observation:** The list disappear, and I could run the code.
-
-**What I need to investigate:** is the list needed, or will can we go trou without the list?
-
----
-
-## Lessons Learned So Far
-
-### 1. Understanding Error Messages
-
-- Read the entire error message and identify the file and line number.
-- Identify the exception type and what it means.
-
-### 2. Understanding Arrays
-
-- An array index represents a position, not a number of products.
-- Check the number of elements before accessing an array index.
-
-### 3. Handling Saved Data
-
-- Skip empty lines when reading saved data.
-- Verify whether products are loaded and displayed correctly.
-
-### 4. Debugging Approach
-
-- Test one change at a time.
-- Distinguish between fixing a crash and fixing the underlying problem.
-- Verify whether a product is added, saved, loaded, and displayed correctly.
-- Slow down and understand why a change works instead of just making the error disappear.
-
-
-
-![alt text](image.png)
-
-Key lesson: If you see MSB3027 or MSB3021 and a message about a file being used by another process, check whether your previous application instance is still running.
-
-"Shopping (11948)" "The file is locked by.
-
-# Testing Invalid Input – Letter Instead of int
-
-## Purpose
-Test what happens when the user enters a letter or text instead of an integer (`int`) when the program expects a numerical value.
+Purpose
+test what happens when the user enters a letter or text instead of an integer (`int`) when the program expects a numerical value.
 
 ## Problem
 When the program uses `int.Parse(Console.ReadLine())`, it attempts to convert the user's input into an integer. If the user enters something like `a` or `hello`, a `FormatException` occurs.
@@ -140,6 +75,8 @@ catch (FormatException)
     continue;
 }
 ```
+The try/and catch exectues if the user instead of number enters a letter
+It reads the line from console tries and convert the int to string
 
 - `try` executes code that might cause an exception.
 - `int.Parse()` attempts to convert the input into an integer.
@@ -151,14 +88,14 @@ catch (FormatException)
 ## Result
 The program can handle letters and text entered where an integer is expected. The user receives an error message and can continue using the program.
 
-## Important Concepts
+## ___Important Concepts__
 
 - `int.Parse()` – converts a string into an integer.
 - `FormatException` – occurs when the input has an invalid format for the conversion.
 - `try-catch` – handles exceptions so the program can respond to errors.
 - `continue` – skips the current iteration and proceeds to the next one.
 
-### __2__ Ta bort en vara som inte finns.
+### __2 Ta bort en vara som inte finns.__
 -----
 
 
@@ -185,20 +122,21 @@ Wouldn't take away the item from the list, neither give an error if the list doe
             continue;
         }
 
-        if (number < 1 || number > list.Count) // Yeah we had this one here too before. but then we didnt have the count public int Count => items.Count;
+        if (number < 1 || number > list.Count) // Yeah we had this one here before. but then we didnt have the count public int Count => items.Count;
         {
             Console.WriteLine("Varan finns inte i listan.");
             continue;
         }
 ```
 Had to create the the property that returns the number of items in the list ref: Shoppinglist 7,5
+Added the list and load method again list.Load in Program.cs
 
 
 
-## __4__ Arbetat med: # Lägg till en vara, spara, avsluta och starta om. Ser listan likadan ut?
-## Svar: Det gör den ej, sparar ej och hoppar rows. Sidnote the format can be deliberately adjusted if u save the list after u have added for instance rows to items.cs ? 
+## __4 Arbetat med: # Lägg till en vara, spara, avsluta och starta om. Ser listan likadan ut?__
+### Svar: Det gör den ej, sparar ej och hoppar rows.
 
-### 1. Save() – Spara inköpslistan
+### __1. Save() – Spara inköpslistan__
 
 Metoden `Save()` sparar inköpslistans varor i filen `items.txt`.
 
@@ -207,18 +145,12 @@ lines.Add($"{item.Price};{item.Name}");
 ```
 
 Varje vara sparas på en egen rad med priset först och namnet efter semikolonet.
+Höger-->Vänster
 
-Exempel på innehållet i `items.txt`:
-
-```text
-50;Mjölk
-20;Bröd
-3;Äpple
-```
 
 Vi använde `File.WriteAllText()` för att skriva informationen till filen.
 
-### 2. Load() – Läsa in inköpslistan
+### __2. Load() – Läsa in inköpslistan__
 
 Metoden `Load()` läser in den sparade informationen från filen.
 
@@ -227,7 +159,10 @@ string text = File.ReadAllText(path);
 string[] lines = text.Split('\n');
 
 ```
-Once we delete the items.txt we gotta make sure  the condition is true when the file is missing and `Load` starts, read only starts at F.ReadAllText(path); Othwie the file gives the FileMissingError
+From the shoppinglist we created the private string path .
+They get seperate rows '\n' in lines in an array of string
+
+Once we delete the items.txt we gotta make sure  the condition is true when the file is missing and `Load` starts, read only starts at F.ReadAllText(path); Oterwhise the file gives the FileMissingError
 ```
            if (!File.Exists(path))
         {
@@ -243,19 +178,13 @@ Once we delete the items.txt we gotta make sure  the condition is true when the 
 
 Detta gör att tomma rader i filen inte skapar några nya objekt i inköpslistan.
 
-### 4. Split() – Dela upp pris och namn
+### __4. Split() – Dela upp pris och namn__
 
 Efter att filen har delats upp i rader delar vi varje rad vid semikolonet.
 
 ```csharp
 string[] parts = line.Split(';');
 items.Add(new Item(parts[1], int.Parse(parts[0])));
-```
-
-Exempel:
-
-```text
-50;Mjölk
 ```
 
 Arrayen `parts` får följande värden:
@@ -267,7 +196,7 @@ Vi använder `int.Parse(parts[0])` för att omvandla priset från en sträng til
 
 Sedan skapas ett nytt `Item`-objekt med namnet och priset, som läggs till i listan.
 
-### 5. Skillnaden mellan Save(), Load() och Print()
+### __5. Skillnaden mellan Save(), Load() och Print()__
 
 | Metod | Ansvar |
 |---|---|
@@ -278,7 +207,7 @@ Sedan skapas ett nytt `Item`-objekt med namnet och priset, som läggs till i lis
 
 Det är viktigt att skilja på att spara data, läsa in data och skriva ut data. Ett problem med utskriften behöver inte betyda att själva listan eller filen är felaktig.
 
-### 6. Felsökning och resultat
+### __6. Felsökning och resultat__
 
 Under arbetet upptäckte vi följande problem:
 
@@ -288,53 +217,19 @@ Under arbetet upptäckte vi följande problem:
 - Vi lade till en kontroll som hoppar över tomma rader.
 - Vi kontrollerade att pris och namn lästes in från rätt positioner i arrayen.
 - Vi undersökte även hur extra radbrytningar i konsolen kan uppstå.
-- Upptäckte hur lätt det är att placera kod "fel" ref: 12,5
 
 **Resultat:** Inköpslistan kunde sparas till fil och läsas in igen med både namn och pris. Vi identifierade även skillnaden mellan tomma rader i konsolutskriften och tomma objekt i listan.
-v
-
-#### 2 side (2 chapter )
-
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,5): error CS1022: Type or namespace definition, or end-of-file expected
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS8641: 'else' cannot start a statement.
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1003: Syntax error, '(' expected
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1525: Invalid expression term 'else'
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1026: ) expected
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(61,6): error CS1002: ; expected
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(85,1): error CS1022: Type or namespace definition, or end-of-file expected
 
 
 
-
-
-__3__  Ta bort en vara som inte finns
---------------------------------------------------
-
-### Unhandled exception. System.ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection. (Parameter 'index')
-### at System.Collections.Generic.List`1.RemoveAt(Int32 index)
-### at ShoppingList.RemoveAt(Int32 number) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\ShoppingList.cs:line 20
-### at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 30
-
-The index is out of range. Cant be negative and less than the "amount"
-Belive that the list changed now tho as i only type "Mjölk" 20 no ? 17:33 09-30-26
-The Case didnt go as it got removed at. 
-"Yeah that worked but why did i have to comment out the removeat?"
-Chat- The number input got removed and gave the error. 
-
-
-
-
-
-
-
-### Second part of the assigment
+### __Second part of the assigment__
 ---
 
 Item ska skydda sig själv
 Konstruktorn ska vägra ta emot ogiltiga värden i stället för att tyst skapa ett trasigt objekt:
-2/4
 - Tomt namn — kasta ArgumentException.
-```
+
+```csharp
     if ( string.IsNullOrWhiteSpace(name)) 
         throw new ArgumentException();
 ```
@@ -342,32 +237,19 @@ Goes in the contructor and as a validation it goes in at the beginning to preven
 
 - Negativt pris — kasta ArgumentOutOfRangeException.
 
-```
+```csharp
     if (price < 0)
         throw new ArgumentOutOfRangeException();
 ```
 Here the validation becomes abit different,
 the validation on the datatypes differ from string and int.
 The input price cant be lower than 0 aka negative.
-
-```
-Unhandled exception. System.ArgumentException: Value does not fall within the expected range.
-   at Item..ctor(String name, Int32 price) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Item.cs:line 10
-   at Program.<Main>$(String[] args) in C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs:line 34
-```
-   Mental note: why do i get this error? "You cant write an empty row" but I cleary aint
-   ```
-   Välj: 1
-Namn: lok
-Pris: -15
-Du får inte skriva en tom rad
-```
+Here the ortder is important as ArgumentException inherit from ArgumentOutOfRangeException
 
 
-
-### Budget cap
+### __Budget cap__
 ---
-```
+```C#
   items.Add(item);
         if (Total() + item.Price > budget) 
         {
@@ -375,9 +257,10 @@ Du får inte skriva en tom rad
         };
 ```
 If total + pris of item is higher than the buget, give us an CW "You dont have enough money and the item wasnt added"
-The method Add() is a voiid and cant return a value. so wee need to adress that by chaning the reurntype into an bool. false/true
+The method Add() is a void and cant return a value. so wee need to adress that by chaning the reurntype into an bool. false/true
 
-```if (Total() + item.Price > budget)
+```C#
+if (Total() + item.Price > budget)
 {
     return false;
 }
@@ -385,14 +268,170 @@ The method Add() is a voiid and cant return a value. so wee need to adress that 
 items.Add(item);
 return true;
 ```
-```
-C:\Users\peter\Desktop\Kunskapskontroll2-Inkopslista\Program.cs(1,25): error CS7036: There is no argument given that corresponds to the required parameter 'budget' of 'ShoppingList.ShoppingList(string, int)'
-````
+
 
 The shoppinglist needs an int , thus giving the parameter "500" as an int. 
 
-**Kasta ett undantag, eller returnera false — välj själv, och motivera valet i din README. Det finns
-inget facit, men det finns en följdfråga: vad behöver Program.cs göra med svaret?** :
-Made a bool as we have either "you are over/"under" budget". Try/Catch seems unnecessary and uneffective. We have an expected outcome
+```C#
+ShoppingList list = new ShoppingList("items.txt", 500);
+```
+
+Kasta ett undantag, eller returnera false — välj själv, och motivera valet i din README. Det finns
+inget facit, men det finns en följdfråga: vad behöver Program.cs göra med svaret?**
+
+Made a bool as we have either "you are over/"under" budget". Try/Catch seems unnecessary and uneffective. We have an expected outcome.
+
+```C#
+ bool added = list.Add(item);
+
+        if (added)
+        {
+            Console.WriteLine("Varan blev tillagd.");
+        }
+        else
+        {
+            Console.WriteLine("Varan blev inte tillagd, du är över budget.");
+        }
+    }
+```
 
 
+### __Learned so far__
+---
+- the exception get catched from the program
+- The program file gets the catch , for instance you find yourself in a 
+  enviroment that doesnt have an console
+- Trow is close to where the problem can accour
+- Catch is where we actually handle the problem
+
+
+
+### UML
+
+```mermaid
+classDiagram
+    class Program {
+        +Main()
+    }
+
+    class ShoppingList {
+        -path : string
+        -budget : int
+        -items : List~Item~
+        +ShoppingList(path : string, budget : int)
+        +Add(item : Item) : bool
+        +RemoveAt(number : int) : void
+        +Save() : void
+        +Load() : void
+        +Find(name : string) : Item
+        +Total() : int
+        +Print() : void
+        +Count : int
+    }
+
+    class Item {
+        +Name : string
+        +Price : int
+        +Item(name : string, price : int)
+        +ToString() : string
+    }
+
+    Program --> ShoppingList : uses
+    Program --> Item : creates
+    ShoppingList "1" --> "0..*" Item : contains
+```
+Taken from Mermaid syntax
+
+
+
+__Conclusion – The six errors__
+---
+
+During the assignment, we worked through six errors in the original program and improved its error handling.
+
+1. IndexOutOfRangeException
+
+The program tried to access an array index that did not exist when loading items from the file.
+
+string[] parts = line.Split(';');
+items.Add(new Item(parts[1], int.Parse(parts[0])));
+
+We corrected the array indexes so the program reads the price and name from the correct positions.
+
+2. Missing items.txt
+
+The program could crash if the file did not exist. We added a check before reading it.
+
+if (!File.Exists(path))
+{
+    return;
+}
+
+3. Invalid number input
+
+Using int.Parse() could cause a FormatException if the user entered letters instead of a number. We replaced it with int.TryParse().
+
+if (!int.TryParse(Console.ReadLine(), out int price))
+{
+    Console.WriteLine("Du måste skriva ett nummer.");
+    continue;
+}
+
+4. Removing an item outside the list
+
+The program could throw an ArgumentOutOfRangeException if the user entered an invalid item number. We added a range check.
+
+if (number < 1 || number > items.Count)
+{
+    throw new ArgumentOutOfRangeException(nameof(number));
+}
+
+items.RemoveAt(number - 1);
+
+5. Incorrect save and load result
+
+The program did not correctly read the saved items because the file data was split or accessed incorrectly. We corrected the way each line is divided into price and name.
+
+string[] parts = line.Split(';');
+
+int price = int.Parse(parts[0]);
+string name = parts[1];
+
+items.Add(new Item(name, price));
+
+6. Hidden error and incorrect error handling
+
+We improved the program so errors are not silently ignored and failed operations are not reported as successful. For example, the Add() method returns a bool to show whether an item was added within the budget. Also we didnt have anything that it should catch before. ref: Program.cs L:58-65 
+{
+    ---
+}
+
+if (Total() + item.Price > budget)
+{
+    return false;
+}
+
+items.Add(item);
+return true;
+
+The program can then give the user the correct message:
+
+if (list.Add(item))
+{
+    Console.WriteLine("Varan blev tillagd.");
+}
+else
+{
+    Console.WriteLine("Varan blev inte tillagd, du är över budget.");
+}
+
+
+
+
+
+
+
+
+![alt text](image.png)
+
+ If you see MSB3027 or MSB3021 and a message about a file being used by another process, check whether your previous application instance is still running.

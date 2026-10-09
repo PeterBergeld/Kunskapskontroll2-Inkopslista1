@@ -6,28 +6,33 @@ class Item
 
     public Item(string name, int price)
     {
-        if ( string.IsNullOrWhiteSpace(name)) 
-        throw new ArgumentException();
-        System.Console.WriteLine("Du får inte skriva en tom rad");
-        
+       // Console.WriteLine($"DEBUG: name = '{name}'"); 
+        if (string.IsNullOrWhiteSpace(name))
+        {
+           throw new ArgumentException("Namnet kan inte vara null eller tomt");  
+           
+        }
 
+        //System.Console.WriteLine("Du får inte skriva en tom rad"); 
+    
         if (price < 0)
-        throw new ArgumentOutOfRangeException();
-        System.Console.WriteLine("Du får inte skriva ett negativt tal");
+        {
+        throw new ArgumentOutOfRangeException(nameof(price), "Du får inte skriva ett negativt tal");
+        //System.Console.WriteLine("Du får inte skriva ett negativt tal");
+        }
+        
 //         }
-{
         Name = name;
         Price = price;
-}
-
-// if ( string.IsNullOrWhiteSpace(name)) //Should be before the Item is "created"
-//         {
-//             throw new ArgumentException();
-//         }
     }
+
+
+
 
     public override string ToString()
     {
         return $"{Name} - {Price} kr";
     }
 }
+
+

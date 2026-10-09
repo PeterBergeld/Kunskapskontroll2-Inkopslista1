@@ -79,7 +79,7 @@ class ShoppingList
     public void Save()
     {
         Console.WriteLine(Path.GetFullPath(path));
-        //Console.WriteLine("Save() was called!");  // to actyally see if the method is called. It is, so the problem is not here.
+        //Console.WriteLine("Save() was called!");  // to actually see if the method is called. It is, so the problem is not here.
         //Console.WriteLine(Path.GetFullPath(path));
         List<string> lines = new List<string>();
         Console.WriteLine($"Antal varor att spara: {items.Count}");
@@ -97,14 +97,7 @@ class ShoppingList
         catch
         {
             Console.WriteLine("Kunde inte spara listan.");
-        }    // so what happens when we just comment it out? It will just not save the list. yeah thats a crash XDXD
-        // try
-        // {
-        //     File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n"); // Line "" SO IT CREATES A EMPTY ONE
-        // }
-        // catch
-        // {
-        // }    // so what happens when we just comment it out? It will just not save the list. yeah thats a crash XDXD
+        }   
 
         Console.WriteLine("Listan är sparad.");
     }
@@ -137,25 +130,3 @@ class ShoppingList
      
     }
 }
-//     foreach (string line in lines)
-// {
-//     string[] parts = line.Split(';');
-
-//     Console.WriteLine($"Line: '{line}'");
-//     Console.WriteLine($"Parts count: {parts.Length}");
-
-//     items.Add(new Item(parts[1], int.Parse(parts[0])));   // Error handling. CW writes it out in the console 
-
-//'ine: '15;Mjölk
-// Parts count: 2
-// 'ine: '32;Bröd
-// Parts count: 2
-// 'ine: '89;Ost
-// Parts count: 2
-// Line: ''  thats the one that makes the error
-// Parts count: 1
-// }
-// }
-// }
-
-// Line "" SO IT CREATES A EMPTY ONE
