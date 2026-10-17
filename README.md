@@ -162,7 +162,7 @@ string[] lines = text.Split('\n');
 From the shoppinglist we created the private string path .
 They get seperate rows '\n' in lines in an array of string
 
-Once we delete the items.txt we gotta make sure  the condition is true when the file is missing and `Load` starts, read only starts at F.ReadAllText(path); Oterwhise the file gives the FileMissingError
+Once we delete the items.txt we gotta make sure  the condition is true when the file is missing and `Load` starts, read only starts at F.ReadAllText(path); Otherwise the file gives the FileMissingError
 ```
            if (!File.Exists(path))
         {
@@ -398,36 +398,7 @@ int price = int.Parse(parts[0]);
 string name = parts[1];
 
 items.Add(new Item(name, price));
-
-6. Hidden error and incorrect error handling
-
-We improved the program so errors are not silently ignored and failed operations are not reported as successful. For example, the Add() method returns a bool to show whether an item was added within the budget. Also we didnt have anything that it should catch before. ref: Program.cs L:58-65 
-{
-    ---
-}
-
-if (Total() + item.Price > budget)
-{
-    return false;
-}
-
-items.Add(item);
-return true;
-
-The program can then give the user the correct message:
-
-if (list.Add(item))
-{
-    Console.WriteLine("Varan blev tillagd.");
-}
-else
-{
-    Console.WriteLine("Varan blev inte tillagd, du är över budget.");
-}
-
-
-
-
+ 
 
 
 
@@ -435,3 +406,76 @@ else
 ![alt text](image.png)
 
  If you see MSB3027 or MSB3021 and a message about a file being used by another process, check whether your previous application instance is still running.
+
+### Correction 20261017
+
+Flytta utskriften in i try-blocket och fånga IOException och UnauthorizedAccessException. Städa också bort debug-utskrifterna i Save och den extra TryParse-raden som kräver dubbelt Enter.
+
+ I corrected this by moving the message inside the try block and catching two exceptions, specifically IOException and UnauthorizedAccessException separately.
+```C#
+  catch (IOException ex)
+    {
+        Console.WriteLine($"Kunde inte spara listan: {ex.Message}");
+    }
+    catch (UnauthorizedAccessException ex)
+    {
+        Console.WriteLine($"Ingen behörighet att spara listan: {ex.Message}");
+    }
+
+```
+
+The debug lines gets deleted.
+Deleted the extra int(!int.Tryparse) so u dont have to press enter 2x. 
+
+### Tabort return;
+ ###catch för ArgumentException står return:
+ //return;  this one could terminate the whole top-level program. The menu looped is now allowed to run again. Deleted that one
+ 
+Yeah the Total() sweept by me. Assume i didnt pay attention. 
+The original has i=1 instead of i=0. Zero-based indexing. If its 1 it skips the first item. 
+```C# And it becomes
+public int Total()
+    {
+        int sum = 0;
+
+        for (int i = 0; i < items.Count; i++) //had 1 before
+        {
+            sum += items[i].Price;
+        }
+
+        return sum;
+    }
+```
+
+### The empty hidden catch from main
+```C#
+     try
+        {
+            File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n");
+        }
+        catch
+        {
+        }
+
+Becomes
+try
+    {
+        List<string> lines = new List<string>();
+
+        foreach (Item item in items)
+        {
+            lines.Add($"{item.Price};{item.Name}");
+        }
+
+        File.WriteAllText(path, string.Join(Environment.NewLine, lines));
+
+        Console.WriteLine("Listan är sparad.");
+    }
+    catch (IOException ex)
+    {
+        Console.WriteLine($"Kunde inte spara listan: {ex.Message}");
+    }
+    catch (UnauthorizedAccessException ex)
+    
+        Console.WriteLine($"Ingen behörighet att spara listan: {ex.Message}");
+```C#

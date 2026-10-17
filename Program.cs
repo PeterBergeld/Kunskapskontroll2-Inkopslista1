@@ -62,7 +62,7 @@ while (true)
     catch (ArgumentException ex)
 {
     Console.WriteLine(ex.Message);
-    return;
+    //return; yhea this one could terminate the whole top-level program
 }
 }
        

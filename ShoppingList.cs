@@ -76,32 +76,32 @@ class ShoppingList
     }
 
     // Writes one item per line, as "price;name".
-    public void Save()
+
+
+public void Save()
+{
+    try
     {
-        Console.WriteLine(Path.GetFullPath(path));
-        //Console.WriteLine("Save() was called!");  // to actually see if the method is called. It is, so the problem is not here.
-        //Console.WriteLine(Path.GetFullPath(path));
         List<string> lines = new List<string>();
-        Console.WriteLine($"Antal varor att spara: {items.Count}");
 
         foreach (Item item in items)
         {
             lines.Add($"{item.Price};{item.Name}");
-            
         }
 
-        try
-        {
-            File.WriteAllText(path, string.Join("\r\n", lines) + "\r\n"); 
-        }
-        catch
-        {
-            Console.WriteLine("Kunde inte spara listan.");
-        }   
+        File.WriteAllText(path, string.Join(Environment.NewLine, lines));
 
         Console.WriteLine("Listan är sparad.");
     }
-
+    catch (IOException ex)
+    {
+        Console.WriteLine($"Kunde inte spara listan: {ex.Message}");
+    }
+    catch (UnauthorizedAccessException ex)
+    {
+        Console.WriteLine($"Ingen behörighet att spara listan: {ex.Message}");
+    }
+}
     // Reads the file back into the list.
     public void Load()
     {
@@ -113,8 +113,6 @@ class ShoppingList
         string text = File.ReadAllText(path);
         string[] lines = text.Split('\n');
 
-                                                //try.parse
-
         foreach (string line in lines)
         {
             if (string.IsNullOrWhiteSpace(line)) //if the input it null or empty or whitespace then we just continue to the next line.
@@ -123,8 +121,8 @@ class ShoppingList
             }
             
             string[] parts = line.Trim().Split(';');
-            items.Add(new Item(parts[1], int.Parse(parts[0]))); // Just to get me  started...Yeah there is an array created, so that means part 0 becomes price
-            // and 1 becomes item thus 15;mjölk
+            items.Add(new Item(parts[1], int.Parse(parts[0]))); 
+            
             
         }
      
