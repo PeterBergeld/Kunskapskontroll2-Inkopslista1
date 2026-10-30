@@ -435,6 +435,8 @@ Deleted the extra int(!int.Tryparse) so u dont have to press enter 2x.
  ###catch för ArgumentException står return:
  //return;  this one could terminate the whole top-level program. The menu looped is now allowed to run again. Deleted that one
  
+
+### The list didnt get the first item error
 Yeah the Total() sweept by me. Assume i didnt pay attention. 
 The original has i=1 instead of i=0. Zero-based indexing. If its 1 it skips the first item. 
 ```C# And it becomes
