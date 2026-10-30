@@ -398,6 +398,10 @@ int price = int.Parse(parts[0]);
 string name = parts[1];
 
 items.Add(new Item(name, price));
+
+6. Empty catch
+The hidden error
+No catch is empty
  
 
 
