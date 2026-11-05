@@ -1,3 +1,4 @@
-45;olee
-78;Kaffe
-45;Ko
+45;Druvor
+45;iglo
+3;teddy
+32;2

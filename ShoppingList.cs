@@ -120,9 +120,12 @@ public void Save()
                  continue; 
             }
             
-            string[] parts = line.Trim().Split(';');
-            items.Add(new Item(parts[1], int.Parse(parts[0]))); 
-            
+           string[] parts = line.Trim().Split(';');
+
+            if (!int.TryParse(parts[0], out int price))
+                continue;
+
+        items.Add(new Item(parts[1], price));
             
         }
      

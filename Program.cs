@@ -74,7 +74,7 @@ while (true)
             Console.WriteLine("Listan är tom.");
             continue;
         }
-        if (!int.TryParse(Console.ReadLine(), out int price))
+        
 
         Console.Write("Ange numret på varan som ska tas bort: ");
         if (!int.TryParse(Console.ReadLine(), out int number))  // a ! false sign to catch if the user writes letters instead of numbers

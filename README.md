@@ -429,7 +429,17 @@ Flytta utskriften in i try-blocket och fånga IOException och UnauthorizedAccess
 ```
 
 The debug lines gets deleted.
-Deleted the extra int(!int.Tryparse) so u dont have to press enter 2x. 
+Deleted the extra int(!int.Tryparse) so u dont have to press enter 2x. Line 77 in program.cs
+
+and the load      
+```C#
+string[] parts = line.Trim().Split(';');
+
+            if (!int.TryParse(parts[0], out int price))
+                continue;
+
+        items.Add(new Item(parts[1], price));
+```
 
 ### Tabort return;
  ###catch för ArgumentException står return:
